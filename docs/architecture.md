@@ -1,14 +1,42 @@
-# opengist-monitoring — Architecture
+# Architecture
 
-OpenGist SQLite and bare Git repositories -> read-only exporter. OpenGist native /metrics -> filtered relay in the same process. Authenticated /metrics -> Prometheus -> Grafana.
+This project connects its data source to its Grafana dashboard through the components shown below.
+
+## Overview
+
+This diagram shows the data path for this project.
+
+```mermaid
+graph LR
+  A[SQLite and Git repositories] -->|read by| B[Domain exporter]
+  C[OpenGist native metrics] -->|filtered by| D[Metrics relay]
+  B -->|exposes metrics to| E[Prometheus]
+  D -->|exposes metrics to| E
+  E -->|queried by| F[Grafana dashboard]
+```
 
 ## Components
 
-- [compose.yml](../compose.yml): container deployment
-- [dashboards/](../dashboards): Grafana dashboard definitions
-- [examples/](../examples): deployment and scrape examples
-- [src/](../src): collector or proxy implementation
+### Data source
 
-## Data interpretation
+OpenGist SQLite and bare Git repositories -> read-only exporter; native metrics -> filtered relay; authenticated /metrics -> Prometheus -> Grafana.
 
-The exporter reads its mounted data directory in read-only mode and aggregates native request metrics without URL and Host labels. Repository size is logical file bytes, not allocated filesystem blocks.
+### Dashboard
+
+`dashboards/opengist-application.json` contains the Grafana dashboard definition.
+
+## Data flow
+
+OpenGist SQLite and bare Git repositories -> read-only exporter; native metrics -> filtered relay; authenticated /metrics -> Prometheus -> Grafana. Grafana evaluates dashboard queries against the selected data source and label values.
+
+## Directory layout
+
+```text
+.
+├── dashboards/  Grafana dashboard JSON files
+├── src/  Python services and collectors
+├── tests/  Automated unit tests
+├── examples/  Scrape and deployment examples
+├── docs/        Documentation source
+└── README.md    Project overview and quick links
+```

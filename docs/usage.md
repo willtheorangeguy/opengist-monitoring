@@ -1,17 +1,17 @@
-# opengist-monitoring — Dashboard Usage
+# Dashboard usage
 
-Import the JSON files using **Grafana → Dashboards → New → Import**. Set the data source and variables listed in [configuration](./configuration.md).
+Import the JSON files using **Grafana → Dashboards → New → Import**. Set the data source and variables listed in [configuration](configuration.md).
 
 ## OpenGist Application Overview
 
-Source: [opengist-application.json](../dashboards/opengist-application.json). Refresh: `30s`.
+Source: [`dashboards/opengist-application.json`](https://github.com/willtheorangeguy/opengist-monitoring/blob/HEAD/dashboards/opengist-application.json). Refresh: `30s`.
 
 <!-- Screenshot: after adding opengist-application.png to .github/icons/opengist-monitoring/, replace this comment with ![OpenGist Application Overview](https://raw.githubusercontent.com/willtheorangeguy/.github/main/icons/opengist-monitoring/opengist-application.png). -->
 
 ### Panels
 
 | Panel | Type | What it shows |
-|---|---|---|
+| --- | --- | --- |
 | Service Health | stat | Prometheus scrape, domain collector, and internal native relay must all be healthy. |
 | Gists | stat | Exact gist rows stored by OpenGist. |
 | Gist Files | stat | Sum of OpenGist's stored per-gist file counts. |
