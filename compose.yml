@@ -1,0 +1,25 @@
+
+services:
+  opengist-exporter:
+    build: .
+    restart: unless-stopped
+    environment:
+      OPENGIST_DATABASE_PATH: /data/opengist.db
+      OPENGIST_REPOSITORY_ROOT: /data/repos
+      OPENGIST_NATIVE_METRICS_URL: ${OPENGIST_NATIVE_METRICS_URL:-http://opengist:6158/metrics}
+      EXPORTER_BEARER_TOKEN_FILE: /run/secrets/exporter_bearer_token
+      POLL_INTERVAL_SECONDS: ${POLL_INTERVAL_SECONDS:-300}
+    volumes:
+      - ${OPENGIST_DATA_DIR:?Set OPENGIST_DATA_DIR}:/data:ro
+      - ./secrets/metrics-token:/run/secrets/exporter_bearer_token:ro
+    ports:
+      - "${BIND_IP:-127.0.0.1}:9179:9179"
+    networks: [opengist]
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+networks:
+  opengist:
+    external: true
+    name: ${OPENGIST_NETWORK:-opengist_default}

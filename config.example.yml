@@ -1,0 +1,9 @@
+environment:
+  OPENGIST_DATABASE_PATH: /data/opengist.db
+  OPENGIST_REPOSITORY_ROOT: /data/repos
+  OPENGIST_NATIVE_METRICS_URL: http://opengist:6158/metrics
+  EXPORTER_BEARER_TOKEN_FILE: /run/secrets/exporter_bearer_token
+  POLL_INTERVAL_SECONDS: "300"
+  REQUEST_TIMEOUT_SECONDS: "5"
+  LISTEN_ADDRESS: 0.0.0.0
+  LISTEN_PORT: "9179"

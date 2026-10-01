@@ -1,0 +1,7 @@
+# Add these entries under scrape_configs in prometheus.yml. Replace example hosts and token paths.
+- job_name: opengist
+  authorization:
+    type: Bearer
+    credentials_file: /etc/prometheus/secrets/opengist-exporter.token
+  static_configs:
+    - targets: [opengist-exporter.example:9179]
